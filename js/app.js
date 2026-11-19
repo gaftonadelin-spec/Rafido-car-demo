@@ -37,7 +37,7 @@
     '<a class="brand" href="index.html" aria-label="Rafido Car, acasă">RAFIDO <span>CAR</span></a>' +
     '<nav class="menu" id="menu" aria-label="Principal">' + links + '</nav>' +
     '<div class="nav-end">' +
-    '<button type="button" class="btn btn-red btn-sm go" data-book>Programează-te</button>' +
+    '<button type="button" class="btn btn-ac btn-sm go" data-book>Programează-te</button>' +
     '<button type="button" class="ibtn" id="theme" aria-label="Schimbă tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<g class="sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g>' +
     '<path class="moon" d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></button>' +
@@ -47,7 +47,7 @@
   document.body.insertAdjacentHTML('beforeend',
     '<footer class="foot"><p><b>RAFIDO CAR</b> · Arad · <a href="tel:+40745903289">0745 903 289</a></p>' +
     '<p>Luni–Vineri 08:00–18:00 · Sâmbătă 08:00–14:00 · Duminică închis</p><p>© 2026 Rafido Car · rafidocar.ro</p></footer>' +
-    '<div class="bar"><a href="tel:+40745903289" class="btn btn-red btn-sm">Sună acum</a>' +
+    '<div class="bar"><a href="tel:+40745903289" class="btn btn-ac btn-sm">Sună acum</a>' +
     '<a href="' + C.WAZE + '" target="_blank" rel="noopener" class="btn btn-line btn-sm">Deschide în Waze</a></div>' +
     '<dialog id="dlg" aria-labelledby="dlg-t"><div class="dlg-top"><h2 id="dlg-t">Programare online</h2>' +
     '<button type="button" class="ibtn" id="dlg-x" aria-label="Închide">✕</button></div>' +
@@ -58,7 +58,7 @@
     '<label>Număr înmatriculare<input type="text" id="bk-p" autocomplete="off" placeholder="AR 12 ABC"></label>' +
     '<label>Nume<input type="text" id="bk-n" autocomplete="name"></label>' +
     '<label>Telefon<input type="tel" id="bk-t" autocomplete="tel"></label>' +
-    '<button type="submit" class="btn btn-red" id="bk-go">Trimite programarea</button>' +
+    '<button type="submit" class="btn btn-ac" id="bk-go">Trimite programarea</button>' +
     '<p class="msg" id="bk-m" role="status"></p></form></dialog>');
 
   /* ===== Temă + meniu ===== */
@@ -66,7 +66,7 @@
     const n = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', n);
     try { localStorage.setItem('theme', n); } catch (e) { /* ignorat */ }
-    const m = $('meta[name="theme-color"]'); if (m) m.content = n === 'light' ? '#FFFFFF' : '#0B0D10';
+    const m = $('meta[name="theme-color"]'); if (m) m.content = n === 'light' ? '#FFFFFF' : '#09090B';
   });
   $('#burger').addEventListener('click', () => {
     const h = $('#top'); const o = h.classList.toggle('open');
@@ -159,7 +159,7 @@
       $$('button', sizesEl).forEach((b, i) => b.setAttribute('aria-pressed', String(i === idx)));
       rowsEl.innerHTML = Object.values(PRICES).map((s) =>
         '<li><div><b style="font:700 1.15rem Barlow,sans-serif;color:inherit">' + s.n + '</b><small>' + s.d + '</small></div><b>' + s.p[idx] + ' lei</b>' +
-        '<button type="button" class="btn btn-red btn-sm" data-book="' + s.b + '">Programează acest serviciu</button></li>').join('');
+        '<button type="button" class="btn btn-ac btn-sm" data-book="' + s.b + '">Programează acest serviciu</button></li>').join('');
     };
     sizesEl.innerHTML = SIZES.map((s, i) => '<button type="button" data-i="' + i + '" aria-pressed="false">' + s + '</button>').join('');
     sizesEl.addEventListener('click', (e) => { const b = e.target.closest('button[data-i]'); if (b) { idx = +b.dataset.i; draw(); } });
@@ -171,7 +171,7 @@
   if (form) {
     const fill = (id, arr, def, fmt) => { $(id).innerHTML = arr.map((v) => '<option value="' + v + '"' + (v === def ? ' selected' : '') + '>' + (fmt ? fmt(v) : v) + '</option>').join(''); };
     const range = (a, b, s) => { const o = []; for (let v = a; v <= b; v += s) o.push(v); return o; };
-    fill('#f-w', range(135, 345, 10).concat([]), 205);
+    fill('#f-w', range(135, 345, 10), 205);
     fill('#f-h', range(25, 85, 5), 55);
     fill('#f-d', range(13, 22, 1), 16, (v) => 'R' + v);
     const size = () => $('#f-w').value + '/' + $('#f-h').value + ' R' + $('#f-d').value;
@@ -206,10 +206,18 @@
     st.forEach((el) => { el.textContent = open ? 'Deschis acum' : 'Închis acum'; el.classList.add(open ? 'on' : 'off'); });
   }
 
-  /* ===== Fade-in discret ===== */
-  const items = $$('[data-rv]');
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { threshold: 0.1 });
-    items.forEach((el) => io.observe(el));
-  } else items.forEach((el) => el.classList.add('in'));
+  /* ===== Animații la scroll: data-anim="up|left|right" + cascadă (data-stagger) ===== */
+  $$('[data-stagger]').forEach((box) => {
+    $$(':scope > [data-anim]', box).forEach((el, i) => el.style.setProperty('--d', Math.min(i, 6) * 80 + 'ms'));
+  });
+  const anims = $$('[data-anim]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) {
+    anims.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    }), { threshold: 0.1, rootMargin: '0px 0px -4% 0px' });
+    anims.forEach((el) => io.observe(el));
+  }
 })();
