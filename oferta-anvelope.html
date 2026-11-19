@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cerere Ofertă Anvelope Noi Arad | Rafido Car</title>
+  <meta name="description" content="Cere ofertă pentru anvelope noi în Arad: alege dimensiunea, sezonul și bugetul și trimite cererea pe WhatsApp sau email.">
+  <meta name="keywords" content="anvelope noi Arad, ofertă anvelope Arad, anvelope iarnă Arad, anvelope vară Arad">
+  <link rel="canonical" href="https://rafidocar.ro/oferta-anvelope.html">
+  <meta name="theme-color" content="#0B0D10">
+  <script>
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+    function imgFb(i) { if (i.dataset.fb && !i.dataset.tried) { i.dataset.tried = '1'; i.src = i.dataset.fb; } else { i.style.display = 'none'; } }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body data-page="oferta">
+<main id="main">
+  <section class="wrap sec pagehead">
+    <h1>Cere ofertă anvelope</h1>
+    <p class="lead">Spune-ne dimensiunea și revenim cu prețuri.</p>
+  </section>
+  <section class="wrap sec tight">
+    <form id="offer-form" class="card pad form" novalidate>
+      <p class="size-out" id="size-out" aria-live="polite">205/55 R16</p>
+      <div class="selects">
+        <label>Lățime<select id="f-w"></select></label>
+        <label>Înălțime<select id="f-h"></select></label>
+        <label>Diametru<select id="f-d"></select></label>
+      </div>
+      <fieldset><legend>Sezon</legend><div class="chips">
+        <label class="chip"><input type="radio" name="season" value="Vară" checked><span>Vară</span></label>
+        <label class="chip"><input type="radio" name="season" value="Iarnă"><span>Iarnă</span></label>
+        <label class="chip"><input type="radio" name="season" value="All-Season"><span>All-Season</span></label>
+      </div></fieldset>
+      <fieldset><legend>Număr bucăți</legend><div class="chips">
+        <label class="chip"><input type="radio" name="qty" value="2 bucăți"><span>2 bucăți</span></label>
+        <label class="chip"><input type="radio" name="qty" value="4 bucăți" checked><span>4 bucăți</span></label>
+      </div></fieldset>
+      <fieldset><legend>Buget</legend><div class="chips">
+        <label class="chip"><input type="radio" name="budget" value="Economic"><span>Economic</span></label>
+        <label class="chip"><input type="radio" name="budget" value="Calitate-Preț" checked><span>Calitate-Preț</span></label>
+        <label class="chip"><input type="radio" name="budget" value="Premium"><span>Premium</span></label>
+      </div></fieldset>
+      <div class="selects">
+        <label>Nume (opțional)<input id="f-name" type="text" autocomplete="name"></label>
+        <label>Telefon (opțional)<input id="f-phone" type="tel" autocomplete="tel"></label>
+      </div>
+      <div class="cta">
+        <button type="button" class="btn btn-wa" id="send-wa">Trimite cererea pe WhatsApp</button>
+        <button type="button" class="btn btn-line" id="send-mail">Trimite pe Email</button>
+      </div>
+      <p class="msg" id="offer-msg" role="status"></p>
+    </form>
+  </section>
+</main>
+</body>
+</html>
